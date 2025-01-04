@@ -5,5 +5,3 @@ repository:
   description: This component is responsible for provisioning Route 53 Resolver DNS Firewall resources, including Route 53 Resolver DNS Firewall, domain lists, firewall rule groups, firewall rules, and logging configuration.
   homepage: https://cloudposse.com/accelerate
   topics: terraform, terraform-component
-
-
