@@ -7,6 +7,15 @@ description: |-
   [Route 53 Resolver DNS Firewall](https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/resolver-dns-firewall.html)
   resources, including Route 53 Resolver DNS Firewall, domain lists, firewall rule groups, firewall rules, and logging
   configuration.
+
+  ## Component Features
+
+  - **Domain Filtering**: Creates domain lists and firewall rules to allow or block DNS queries to specific domains
+  - **VPC Association**: Associates firewall rule groups with VPCs for DNS-level network protection
+  - **Query Logging**: Optionally logs all DNS queries to an S3 bucket for auditing and analysis
+  - **Fail-Open/Fail-Closed**: Controls whether DNS resolution continues or stops if the firewall fails
+  - **Account Verification**: Optional safety check that validates Terraform is running in the correct AWS account
+  - **Flexible Account Map**: Supports both remote-state account-map lookups (default) and static account map variables
 usage: |-
   **Stack Level**: Regional
 
@@ -117,12 +126,12 @@ references:
     description: Cloud Posse's upstream component
 tags:
   - component/route53-resolver-dns-firewall
-  - layer/unassigned
+  - layer/security-and-compliance
   - provider/aws
 # Categories of this project
 categories:
   - component/route53-resolver-dns-firewall
-  - layer/unassigned
+  - layer/security-and-compliance
   - provider/aws
 # License of this project
 license: "APACHE2"
