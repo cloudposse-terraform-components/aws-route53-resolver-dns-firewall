@@ -15,7 +15,7 @@ description: |-
   - **Query Logging**: Optionally logs all DNS queries to an S3 bucket for auditing and analysis
   - **Fail-Open/Fail-Closed**: Controls whether DNS resolution continues or stops if the firewall fails
   - **Account Verification**: Optional safety check that validates Terraform is running in the correct AWS account
-  - **Flexible Account Map**: Supports both remote-state account-map lookups (default) and static account map variables
+  - **Flexible Account Map**: Supports both remote-state account-map lookups and static account map variables (default)
 usage: |-
   **Stack Level**: Regional
 
