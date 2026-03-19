@@ -1,12 +1,18 @@
 locals {
-  enabled           = module.this.enabled
-  query_log_enabled = local.enabled && var.query_log_enabled
+  enabled            = module.this.enabled
+  query_log_enabled  = local.enabled && var.query_log_enabled
+  account_map        = module.account_map.outputs.full_account_map
+  current_account_id = one(data.aws_caller_identity.this[*].account_id)
 
   vpc_outputs = module.vpc.outputs
   vpc_id      = local.vpc_outputs.vpc_id
 
   logs_bucket_outputs = module.logs_bucket.outputs
   logs_bucket_arn     = local.logs_bucket_outputs.bucket_arn
+}
+
+data "aws_caller_identity" "this" {
+  count = local.enabled ? 1 : 0
 }
 
 module "route53_resolver_dns_firewall" {
