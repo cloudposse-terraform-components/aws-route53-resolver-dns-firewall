@@ -116,11 +116,11 @@ atmos terraform apply route53-resolver-dns-firewall/example -s <stack>
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_account_map"></a> [account\_map](#module\_account\_map) | cloudposse/stack-config/yaml//modules/remote-state | 1.8.0 |
-| <a name="module_logs_bucket"></a> [logs\_bucket](#module\_logs\_bucket) | cloudposse/stack-config/yaml//modules/remote-state | 1.8.0 |
+| <a name="module_account_map"></a> [account\_map](#module\_account\_map) | cloudposse/stack-config/yaml//modules/remote-state | 2.0.0 |
+| <a name="module_logs_bucket"></a> [logs\_bucket](#module\_logs\_bucket) | cloudposse/stack-config/yaml//modules/remote-state | 2.0.0 |
 | <a name="module_route53_resolver_dns_firewall"></a> [route53\_resolver\_dns\_firewall](#module\_route53\_resolver\_dns\_firewall) | cloudposse/route53-resolver-dns-firewall/aws | 0.3.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
-| <a name="module_vpc"></a> [vpc](#module\_vpc) | cloudposse/stack-config/yaml//modules/remote-state | 1.8.0 |
+| <a name="module_vpc"></a> [vpc](#module\_vpc) | cloudposse/stack-config/yaml//modules/remote-state | 2.0.0 |
 
 ## Resources
 
