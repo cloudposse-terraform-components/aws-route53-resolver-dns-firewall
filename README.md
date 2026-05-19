@@ -153,38 +153,38 @@ atmos terraform apply route53-resolver-dns-firewall/example -s <stack>
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.4.0 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4.9.0 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.9.0 |
+| ---- | ------- |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.45.0 |
 | <a name="provider_terraform"></a> [terraform](#provider\_terraform) | n/a |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_account_map"></a> [account\_map](#module\_account\_map) | cloudposse/stack-config/yaml//modules/remote-state | 2.0.0 |
 | <a name="module_logs_bucket"></a> [logs\_bucket](#module\_logs\_bucket) | cloudposse/stack-config/yaml//modules/remote-state | 2.0.0 |
-| <a name="module_route53_resolver_dns_firewall"></a> [route53\_resolver\_dns\_firewall](#module\_route53\_resolver\_dns\_firewall) | cloudposse/route53-resolver-dns-firewall/aws | 0.3.0 |
+| <a name="module_route53_resolver_dns_firewall"></a> [route53\_resolver\_dns\_firewall](#module\_route53\_resolver\_dns\_firewall) | cloudposse/route53-resolver-dns-firewall/aws | 2.0.0 |
 | <a name="module_this"></a> [this](#module\_this) | cloudposse/label/null | 0.25.0 |
 | <a name="module_vpc"></a> [vpc](#module\_vpc) | cloudposse/stack-config/yaml//modules/remote-state | 2.0.0 |
 
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [terraform_data.account_verification](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) | resource |
 | [aws_caller_identity.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| ---- | ----------- | ---- | ------- | :------: |
 | <a name="input_account_map"></a> [account\_map](#input\_account\_map) | Static account map configuration. Only used when `account_map_enabled` is `false`.<br/>Map keys use `tenant-stage` format (e.g., `core-security`, `core-audit`, `plat-prod`). | <pre>object({<br/>    full_account_map              = map(string)<br/>    audit_account_account_name    = optional(string, "")<br/>    root_account_account_name     = optional(string, "")<br/>    identity_account_account_name = optional(string, "")<br/>    aws_partition                 = optional(string, "aws")<br/>    iam_role_arn_templates        = optional(map(string), {})<br/>  })</pre> | <pre>{<br/>  "audit_account_account_name": "",<br/>  "aws_partition": "aws",<br/>  "full_account_map": {},<br/>  "iam_role_arn_templates": {},<br/>  "identity_account_account_name": "",<br/>  "root_account_account_name": ""<br/>}</pre> | no |
 | <a name="input_account_map_component_name"></a> [account\_map\_component\_name](#input\_account\_map\_component\_name) | The name of the account-map component | `string` | `"account-map"` | no |
 | <a name="input_account_map_enabled"></a> [account\_map\_enabled](#input\_account\_map\_enabled) | Enable the account map component. When true, the component fetches account mappings from the<br/>`account-map` component via remote state. When false (default), the component uses the static `account_map` variable instead. | `bool` | `false` | no |
@@ -214,7 +214,7 @@ atmos terraform apply route53-resolver-dns-firewall/example -s <stack>
 | <a name="input_regex_replace_chars"></a> [regex\_replace\_chars](#input\_regex\_replace\_chars) | Terraform regular expression (regex) string.<br/>Characters matching the regex will be removed from the ID elements.<br/>If not set, `"/[^a-zA-Z0-9-]/"` is used to remove all characters other than hyphens, letters and digits. | `string` | `null` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS Region | `string` | n/a | yes |
 | <a name="input_root_account_stage"></a> [root\_account\_stage](#input\_root\_account\_stage) | The stage name for the Organization root (management) account. This is used to lookup account IDs from account names<br/>using the `account-map` component. | `string` | `"root"` | no |
-| <a name="input_rule_groups_config"></a> [rule\_groups\_config](#input\_rule\_groups\_config) | Rule groups and rules configuration | <pre>map(object({<br/>    priority            = number<br/>    mutation_protection = optional(string)<br/>    # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_resolver_firewall_rule<br/>    rules = map(object({<br/>      action                    = string<br/>      priority                  = number<br/>      block_override_dns_type   = optional(string)<br/>      block_override_domain     = optional(string)<br/>      block_override_ttl        = optional(number)<br/>      block_response            = optional(string)<br/>      firewall_domain_list_name = string<br/>    }))<br/>  }))</pre> | n/a | yes |
+| <a name="input_rule_groups_config"></a> [rule\_groups\_config](#input\_rule\_groups\_config) | Rule groups and rules configuration.<br/>Each rule must specify exactly one of:<br/>- `firewall_domain_list_name` for custom lists defined in `domains_config` (created by the underlying module)<br/>- `firewall_domain_list_id` for AWS Managed Domain Lists or other pre-existing domain lists referenced by ID | <pre>map(object({<br/>    priority            = number<br/>    mutation_protection = optional(string)<br/>    # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_resolver_firewall_rule<br/>    rules = map(object({<br/>      action                    = string<br/>      priority                  = number<br/>      block_override_dns_type   = optional(string)<br/>      block_override_domain     = optional(string)<br/>      block_override_ttl        = optional(number)<br/>      block_response            = optional(string)<br/>      firewall_domain_list_name = optional(string)<br/>      firewall_domain_list_id   = optional(string)<br/>    }))<br/>  }))</pre> | n/a | yes |
 | <a name="input_stage"></a> [stage](#input\_stage) | ID element. Usually used to indicate role, e.g. 'prod', 'staging', 'source', 'build', 'test', 'deploy', 'release' | `string` | `null` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | Additional tags (e.g. `{'BusinessUnit': 'XYZ'}`).<br/>Neither the tag keys nor the tag values will be modified by this module. | `map(string)` | `{}` | no |
 | <a name="input_tenant"></a> [tenant](#input\_tenant) | ID element \_(Rarely used, not included by default)\_. A customer identifier, indicating who this instance of a resource is for | `string` | `null` | no |
@@ -223,7 +223,7 @@ atmos terraform apply route53-resolver-dns-firewall/example -s <stack>
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_domains"></a> [domains](#output\_domains) | Route 53 Resolver DNS Firewall domain configurations |
 | <a name="output_query_log_config"></a> [query\_log\_config](#output\_query\_log\_config) | Route 53 Resolver query logging configuration |
 | <a name="output_rule_group_associations"></a> [rule\_group\_associations](#output\_rule\_group\_associations) | Route 53 Resolver DNS Firewall rule group associations |
