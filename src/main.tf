@@ -17,7 +17,7 @@ data "aws_caller_identity" "this" {
 
 module "route53_resolver_dns_firewall" {
   source  = "cloudposse/route53-resolver-dns-firewall/aws"
-  version = "0.3.0"
+  version = "2.0.0"
 
   vpc_id                    = local.vpc_id
   query_log_destination_arn = local.logs_bucket_arn
